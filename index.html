@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="Codex">
 <meta property="og:locale" content="ar_AR">
 <meta property="og:title" content="Codex | تصميم وتطوير التطبيقات">
-<meta property="og:description" content="نحوّل فكرتك إلى تطبيق ناجح. تسليم من يوم إلى 3 أيام وأسعار من 150 جنيه.">
+<meta property="og:description" content="نحوّل فكرتك إلى تطبيق ناجح. تسليم من يوم إلى 3 أيام وأسعار من 500 جنيه.">
 <meta property="og:url" content="https://tomasezzat2012-tech.github.io/codex/">
 <meta property="og:image" content="https://tomasezzat2012-tech.github.io/codex/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -36,7 +36,7 @@
   "email": "tomasezzat@gmail.com",
   "telephone": "+201223073828",
   "areaServed": "EG",
-  "priceRange": "150-650 EGP"
+  "priceRange": "500-950 EGP"
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -211,11 +211,33 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
 .codeline .cur{display:inline-block;width:10px;height:1.2em;background:var(--b);animation:blink2 .9s step-end infinite}
 @keyframes blink2{50%{opacity:0}}
 
+/* مشاريعنا */
+.projects{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px}
+.card.proj{padding:0;display:flex;flex-direction:column;overflow:hidden}
+.proj .pic{aspect-ratio:16/10;display:grid;place-items:center;overflow:hidden;font-size:3.4rem;font-weight:900;color:rgba(255,255,255,.85);background:linear-gradient(135deg,rgba(108,140,255,.55),rgba(34,211,166,.4))}
+.proj .pic img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.card.proj:hover .pic img{transform:scale(1.06)}
+.proj .pbody{padding:22px 24px 24px;display:flex;flex-direction:column;gap:6px;flex:1}
+.proj .cat{align-self:flex-start;font-size:.8rem;font-weight:700;padding:3px 12px;border-radius:999px;background:rgba(108,140,255,.16);color:var(--a)}
+.proj h3{font-size:1.2rem}
+.proj p{color:var(--muted);font-size:.95rem;flex:1}
+.proj .go{margin-top:10px;font-weight:700;color:var(--b)}
+.proj-msg{grid-column:1/-1;text-align:center;color:var(--muted);padding:44px 20px;border:1px dashed rgba(140,160,255,.3);border-radius:var(--radius)}
+
 /* ظهور عند التمرير */
 .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s ease,transform .8s ease}
 .reveal.in{opacity:1;transform:none}
 .reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}.reveal.d3{transition-delay:.3s}
 
+/* تخفيف التأثيرات التقيلة على الموبايل والأجهزة الضعيفة */
+@media(max-width:900px),(pointer:coarse){
+  .card,.chip,.contact-box,.faq details,header.scrolled{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .card,.faq details,.contact-box{background:rgba(20,27,52,.92)}
+  header.scrolled{background:rgba(7,11,24,.97)}
+  .chip{background:rgba(20,27,52,.95)}
+  .aurora i{filter:blur(55px);animation:none}
+  .grid-bg{display:none}
+}
 @media(max-width:900px){
   .hero .container{grid-template-columns:1fr;text-align:center}
   .hero p.lead{margin-inline:auto}.actions{justify-content:center}
@@ -246,6 +268,7 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
       <ul id="menu">
         <li><a href="#home" class="active">الرئيسية</a></li>
         <li><a href="#services">خدماتنا</a></li>
+        <li><a href="#projects">أعمالنا</a></li>
         <li><a href="#process">طريقة العمل</a></li>
         <li><a href="#why">لماذا نحن</a></li>
         <li><a href="#pricing">الأسعار</a></li>
@@ -312,6 +335,15 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
     </div>
   </section>
 
+    <section id="projects">
+    <div class="container">
+      <span class="eyebrow reveal">أعمالنا</span>
+      <h2 class="reveal">مشاريع <span class="grad-text">اشتغلنا عليها</span></h2>
+      <p class="sub reveal">نماذج من شغلنا، وبتتحدّث أول بأول.</p>
+      <div class="projects" id="projects-grid"><div class="proj-msg">بنجهّز المشاريع...</div></div>
+    </div>
+  </section>
+
   <section id="process">
     <div class="container">
       <span class="eyebrow reveal">طريقة العمل</span>
@@ -344,11 +376,11 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
     <div class="container">
       <span class="eyebrow reveal">الأسعار</span>
       <h2 class="reveal">أسعار <span class="grad-text">واضحة ومناسبة</span></h2>
-      <p class="sub reveal">من 150 إلى 650 جنيه حسب حجم المشروع، وتسليم من يوم إلى 3 أيام</p>
+      <p class="sub reveal">من 500 إلى 950 جنيه حسب حجم المشروع، وتسليم من يوم إلى 3 أيام</p>
       <div class="plans">
         <div class="card plan reveal">
           <span class="tag">أساسي</span>
-          <div class="price">150 <small>جنيه / تبدأ من</small></div>
+          <div class="price">500 <small>جنيه / تبدأ من</small></div>
           <ul>
             <li>تطبيق أو صفحة بسيطة</li>
             <li>تصميم نظيف وعصري</li>
@@ -359,7 +391,7 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
         </div>
         <div class="card plan hot reveal d1">
           <span class="tag">الأكثر طلباً</span>
-          <div class="price">350 <small>جنيه</small></div>
+          <div class="price">750 <small>جنيه</small></div>
           <ul>
             <li>عدة شاشات وميزات</li>
             <li>تصميم مخصص بالكامل</li>
@@ -370,7 +402,7 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
         </div>
         <div class="card plan reveal d2">
           <span class="tag">متقدم</span>
-          <div class="price">650 <small>جنيه / حتى</small></div>
+          <div class="price">950 <small>جنيه / حتى</small></div>
           <ul>
             <li>مشروع متكامل بميزات متقدمة</li>
             <li>ربط بقاعدة بيانات وخدمات</li>
@@ -392,7 +424,7 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
       <div class="faq reveal">
         <details>
           <summary>بتكلف كام؟</summary>
-          <p>الأسعار من 150 إلى 650 جنيه حسب حجم المشروع والميزات المطلوبة. بعد ما تبعتلنا فكرتك بنحدد لك السعر النهائي.</p>
+          <p>الأسعار من 500 إلى 950 جنيه حسب حجم المشروع والميزات المطلوبة. بعد ما تبعتلنا فكرتك بنحدد لك السعر النهائي.</p>
         </details>
         <details>
           <summary>المشروع بياخد وقت قد إيه؟</summary>
@@ -458,7 +490,8 @@ footer{border-top:1px solid var(--line);padding:34px 0;text-align:center;color:v
 /* ====== إعدادات التواصل: غيّر القيم دي ====== */
 var CONFIG = {
   whatsapp: '201223073828',   // رقمك بالصيغة الدولية بدون + أو أصفار (مصر: 20 + الرقم بدون الصفر)
-  email: 'tomasezzat@gmail.com'     // بريد Gmail اللي هتستقبل عليه الرسائل
+  email: 'tomasezzat@gmail.com',     // بريد Gmail اللي هتستقبل عليه الرسائل
+  sheet: ''   // رابط Google Sheet المنشور كـ CSV (بيتحط مرة واحدة)
 };
 /* ======================================== */
 
@@ -534,6 +567,8 @@ var CONFIG = {
     colG.push('rgba(34,211,166,' + a.toFixed(3) + ')');
     colB.push('rgba(108,140,255,' + a.toFixed(3) + ')');
   }
+  var lite = matchMedia('(pointer:coarse)').matches || innerWidth < 760 || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+  var step = lite ? fs * 1.8 : fs;
   function rch(){ return chars[Math.floor(Math.random() * chars.length)] }
   function mk(initial){
     var s = { y: initial ? Math.random() * (RH + TRAIL * fs) : -Math.random() * RH * .4,
@@ -543,16 +578,17 @@ var CONFIG = {
   }
   function rsize(){
     RW = rn.width = innerWidth; RH = rn.height = innerHeight;
-    cols = Math.floor(RW / fs); streams = [];
+    cols = Math.floor(RW / step); streams = [];
     for (var i = 0; i < cols; i++) streams.push(mk(true));
   }
   rsize(); addEventListener('resize', rsize);
   function rain(now){
+    if (lite && now - lastT < 33){ requestAnimationFrame(rain); return }
     var dt = Math.min(.05, (now - lastT) / 1000 || .016); lastT = now;
     rc.clearRect(0, 0, RW, RH);
     rc.font = fs + 'px "Courier New",monospace';
     for (var i = 0; i < cols; i++){
-      var s = streams[i], x = i * fs, pal = i % 3 ? colG : colB;
+      var s = streams[i], x = i * step, pal = i % 3 ? colG : colB;
       s.y += s.v * dt; s.t += dt;
       if (s.t > .15){ s.t = 0; s.ch[Math.floor(Math.random() * TRAIL)] = rch() }
       for (var k = 0; k < TRAIL; k++){
@@ -570,11 +606,14 @@ var CONFIG = {
   /* جزيئات الخلفية */
   var cv = $('#particles'), cx = cv.getContext('2d'), P = [], W, H, mouse = {x:-999,y:-999};
   function size(){ W = cv.width = cv.offsetWidth; H = cv.height = cv.offsetHeight;
-    var n = Math.min(70, Math.floor(W * H / 16000)); P = [];
+    var n = Math.min(lite ? 26 : 70, Math.floor(W * H / 16000)); P = [];
     for (var i = 0; i < n; i++) P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5}); }
   size(); addEventListener('resize', size);
   cv.parentNode.addEventListener('mousemove', function(e){ var r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top });
+  var heroOn = true;
+  if ('IntersectionObserver' in window) new IntersectionObserver(function(es){ heroOn = es[0].isIntersecting }).observe(cv.parentNode);
   function draw(){
+    if (!heroOn){ requestAnimationFrame(draw); return }
     cx.clearRect(0,0,W,H);
     for (var i = 0; i < P.length; i++){
       var p = P[i]; p.x += p.vx; p.y += p.vy;
@@ -616,6 +655,77 @@ var CONFIG = {
       '&su=' + encodeURIComponent(d.subject) + '&body=' + encodeURIComponent(d.body), '_blank');
     say('تم فتح Gmail، اضغط إرسال هناك ✅');
   };
+})();
+
+/* ====== أعمالنا: بتتقرا من Google Sheet ====== */
+(function(){
+  var box = document.getElementById('projects-grid');
+  if (!box) return;
+  function msg(t){ box.innerHTML = ''; var d = document.createElement('div'); d.className = 'proj-msg'; d.textContent = t; box.appendChild(d) }
+  function parseCSV(t){
+    var rows = [], row = [], f = '', q = false;
+    for (var i = 0; i < t.length; i++){
+      var c = t.charAt(i);
+      if (q){ if (c === '"'){ if (t.charAt(i + 1) === '"'){ f += '"'; i++ } else q = false } else f += c }
+      else if (c === '"') q = true;
+      else if (c === ','){ row.push(f); f = '' }
+      else if (c === '\n' || c === '\r'){ if (c === '\r' && t.charAt(i + 1) === '\n') i++; row.push(f); f = ''; rows.push(row); row = [] }
+      else f += c;
+    }
+    if (f !== '' || row.length){ row.push(f); rows.push(row) }
+    return rows;
+  }
+  function safeUrl(u){ u = (u || '').trim(); return /^https?:\/\//i.test(u) ? u : '' }
+  function imgUrl(u){
+    u = safeUrl(u);
+    var m = u.match(/drive\.google\.com\/file\/d\/([\w-]+)/) || u.match(/drive\.google\.com\/(?:open|uc)\?(?:[^#]*&)?id=([\w-]+)/);
+    return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w900' : u;
+  }
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){
+    es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target) } });
+  }, {threshold:.12}) : null;
+  var fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  function tilt(c){
+    c.addEventListener('mousemove', function(e){
+      var r = c.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      c.style.setProperty('--mx', x + 'px'); c.style.setProperty('--my', y + 'px');
+      if (fine) c.style.transform = 'perspective(800px) rotateX(' + ((y / r.height - .5) * -6) + 'deg) rotateY(' + ((x / r.width - .5) * 6) + 'deg) translateY(-4px)';
+    });
+    c.addEventListener('mouseleave', function(){ c.style.transform = '' });
+  }
+  function card(p, i){
+    var a = document.createElement('article'); a.className = 'card proj reveal d' + (i % 3 + 1);
+    var pic = document.createElement('div'); pic.className = 'pic';
+    var src = imgUrl(p.image);
+    if (src){ var im = document.createElement('img'); im.src = src; im.alt = p.title; im.loading = 'lazy'; im.referrerPolicy = 'no-referrer';
+      im.onerror = function(){ im.remove(); pic.textContent = p.title.charAt(0) }; pic.appendChild(im) }
+    else pic.textContent = p.title.charAt(0);
+    a.appendChild(pic);
+    var b = document.createElement('div'); b.className = 'pbody';
+    if (p.category){ var c = document.createElement('span'); c.className = 'cat'; c.textContent = p.category; b.appendChild(c) }
+    var h = document.createElement('h3'); h.textContent = p.title; b.appendChild(h);
+    if (p.description){ var d = document.createElement('p'); d.textContent = p.description; b.appendChild(d) }
+    var link = safeUrl(p.link);
+    if (link){ var g = document.createElement('a'); g.className = 'go'; g.href = link; g.target = '_blank'; g.rel = 'noopener'; g.textContent = 'شوف المشروع ←'; b.appendChild(g) }
+    a.appendChild(b); tilt(a); return a;
+  }
+  function render(list){
+    if (!list.length){ msg('مشاريعنا هتظهر هنا قريباً.'); return }
+    box.innerHTML = '';
+    list.forEach(function(p, i){ var c = card(p, i); box.appendChild(c); if (io) io.observe(c); else c.classList.add('in') });
+  }
+  if (!CONFIG.sheet){ msg('مشاريعنا هتظهر هنا قريباً.'); return }
+  fetch(CONFIG.sheet).then(function(r){ if (!r.ok) throw 0; return r.text() }).then(function(t){
+    var rows = parseCSV(t).filter(function(r){ return r.some(function(x){ return x.trim() }) });
+    if (rows.length < 2){ render([]); return }
+    var head = rows[0].map(function(h){ return h.trim().toLowerCase() }), list = [];
+    rows.slice(1).forEach(function(r){
+      var o = {}; head.forEach(function(h, i){ o[h] = (r[i] || '').trim() });
+      var hide = /^(no|false|0|hide|hidden|لا)$/i.test(o.show || '');
+      if (o.title && !hide) list.push(o);
+    });
+    render(list);
+  }).catch(function(){ msg('مقدرناش نحمّل المشاريع دلوقتي، جرّب تحدّث الصفحة بعد شوية.') });
 })();
 </script>
 </body>
