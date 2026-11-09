@@ -27,6 +27,15 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Codex",
+  "alternateName": ["كودكس", "Codex Apps"],
+  "url": "https://tomasezzat2012-tech.github.io/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Codex",
   "alternateName": ["كودكس", "Codex Apps"],
@@ -776,7 +785,14 @@ var CONFIG = {
     box.innerHTML = '';
     list.forEach(function(p, i){ var c = card(p, i); box.appendChild(c); if (io) io.observe(c); else c.classList.add('in') });
   }
-  if (!CONFIG.sheet){ render(CONFIG.projects || []); return }
+  if (!CONFIG.sheet){
+    var base = CONFIG.projects || [];
+    fetch('projects.json?v=' + Date.now()).then(function(r){ if (!r.ok) throw 0; return r.json() }).then(function(j){
+      var extra = Array.isArray(j) ? j.filter(function(p){ return p && p.title && !p.hidden }) : [];
+      render(extra.concat(base));
+    }).catch(function(){ render(base) });
+    return;
+  }
   fetch(CONFIG.sheet).then(function(r){ if (!r.ok) throw 0; return r.text() }).then(function(t){
     var rows = parseCSV(t).filter(function(r){ return r.some(function(x){ return x.trim() }) });
     if (rows.length < 2){ render([]); return }
