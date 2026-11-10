@@ -49,6 +49,8 @@ a{color:var(--b)}
     <label for="repo">المستودع</label>
     <input id="repo" type="text" dir="ltr" value="tomasezzat2012-tech/tomasezzat2012-tech.github.io">
     <button id="login">دخول</button>
+    <button id="diag" class="sec" style="margin-inline-start:8px">اختبار الاتصال</button>
+    <pre id="diagOut" class="muted" dir="ltr" style="white-space:pre-wrap;margin-top:10px"></pre>
     <details style="margin-top:14px"><summary class="muted">إزاي أجيب المفتاح؟</summary>
       <ol style="margin-top:8px">
         <li>افتح GitHub ثم صورتك ثم <b>Settings</b>.</li>
@@ -102,14 +104,19 @@ a{color:var(--b)}
       headers: { 'Authorization': 'Bearer ' + cfg.token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
       body: opt.body ? JSON.stringify(opt.body) : undefined,
       cache: 'no-store'
+    }).catch(function(err){
+      throw new Error('المتصفح مش قادر يوصل لـ GitHub من الصفحة دي. اضغط زر «اختبار الاتصال» وابعتلي نتيجته. (' + (err && err.name) + ': ' + (err && err.message) + ')');
     }).then(function(r){
       if (r.status === 404 && opt.allow404) return null;
-      if (r.status === 401) throw new Error('المفتاح غلط أو منتهي.');
-      if (r.status === 403) throw new Error('المفتاح ملوش صلاحية على المستودع ده (لازم Contents: Read and write).');
-      if (r.status === 404) throw new Error('المستودع غير موجود أو المفتاح مش مربوط بيه.');
-      if (r.status === 409 || r.status === 422) throw new Error('حصل تعارض، جرّب تاني.');
-      if (!r.ok) throw new Error('خطأ من GitHub (' + r.status + ').');
-      return r.json();
+      if (r.ok) return r.json();
+      return r.text().then(function(t){
+        var m = ''; try { m = JSON.parse(t).message || '' } catch(e){}
+        var hint = r.status === 401 ? 'المفتاح مرفوض أو منتهي.' :
+                   r.status === 403 ? 'المفتاح مالوش صلاحية كتابة على المستودع (Contents: Read and write) أو في قيود على الفرع.' :
+                   r.status === 404 ? 'المستودع غير موجود أو المفتاح مش مربوط بيه.' :
+                   (r.status === 409 || r.status === 422) ? 'حصل تعارض، جرّب تاني.' : 'خطأ من GitHub.';
+        throw new Error(hint + ' [' + r.status + '] ' + m);
+      });
     });
   }
 
@@ -213,14 +220,26 @@ a{color:var(--b)}
     });
   }
   $('login').onclick = function(){
-    var t = $('tok').value.trim(), r = $('repo').value.trim();
-    if (!t || !/^[\w.\-]+\/[\w.\-]+$/.test(r)){ say('اكتب المفتاح واسم المستودع صح.'); return }
+    var t = $('tok').value.replace(/[^\x21-\x7e]/g, ''), r = $('repo').value.replace(/\s/g, '');
+    if (!t){ say('الصق المفتاح الأول في الخانة.'); return }
+    if (!/^(github_pat_|ghp_)/.test(t)){ say('ده مش شكل مفتاح GitHub. لازم يبدأ بـ github_pat_ . انسخه من صفحة GitHub بعد ما تضغط Generate token.'); return }
+    if (!/^[\w.\-]+\/[\w.\-]+$/.test(r)){ say('اسم المستودع غلط. لازم يكون بالشكل: اسم-الحساب/اسم-المستودع'); return }
     cfg = { token: t, repo: r };
     lock(true);
     readList().then(function(){
       try { localStorage.setItem(K, JSON.stringify(cfg)) } catch(e){}
       $('tok').value = ''; enter();
     }).catch(function(e){ say(e.message) }).then(function(){ lock(false) });
+  };
+  $('diag').onclick = function(){
+    var out = $('diagOut'), tok = $('tok').value.replace(/[^\x21-\x7e]/g, ''), lines = [];
+    function log(t){ lines.push(t); out.textContent = lines.join('\n') }
+    out.textContent = 'testing...';
+    log('browser: ' + navigator.userAgent);
+    log('online: ' + navigator.onLine);
+    fetch('https://api.github.com/zen', {cache:'no-store'}).then(function(r){ log('1) simple request: OK (' + r.status + ')') }, function(e){ log('1) simple request: FAIL ' + e.name + ': ' + e.message) })
+    .then(function(){ return fetch('https://api.github.com/rate_limit', {headers:{'Authorization':'Bearer ' + (tok || 'x')}}).then(function(r){ log('2) with Authorization header: OK (' + r.status + ')') }, function(e){ log('2) with Authorization header: FAIL ' + e.name + ': ' + e.message) }) })
+    .then(function(){ return fetch('https://raw.githubusercontent.com/', {mode:'no-cors'}).then(function(){ log('3) other github domain: OK') }, function(e){ log('3) other github domain: FAIL ' + e.name) }) });
   };
   $('logout').onclick = function(){ try { localStorage.removeItem(K) } catch(e){} location.reload() };
 
